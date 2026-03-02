@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Plan Your Trip | HiddenTrails.AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* ✅ DARK GLASSMORPHIC BACKGROUND */
+    body {
+      background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
+                  url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    /* ✅ FORM CONTAINER GLASSMORPHISM */
+    .glass-form {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ✅ INPUT STYLING */
+    .custom-input {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      color: white !important;
+      transition: all 0.3s ease;
+    }
+    .custom-input:focus {
+      border-color: #10b981 !important;
+      background: rgba(255, 255, 255, 0.15) !important;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+      outline: none;
+    }
+    .custom-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+    /* Custom Date Picker Icon Color */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+    }
+
+    .glass-sidebar {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+    }
+  </style>
+</head>
+
+<body class="font-sans text-white">
+
+<nav class="bg-black/30 backdrop-blur-lg border-b border-white/10 px-8 py-4 flex justify-between items-center sticky top-0 z-50">
+  <div class="flex items-center gap-2">
+    <i class="fa-solid fa-compass text-green-400 text-2xl"></i>
+    <h1 class="text-2xl font-black text-white tracking-tight">HiddenTrails.AI</h1>
+  </div>
+  <div class="flex items-center space-x-8 font-medium text-gray-200">
+    <a href="index.html" class="hover:text-green-400 transition">Home</a>
+    <a href="dashboard.html" class="hover:text-green-400 transition">Dashboard</a>
+    <a href="saved.html" class="hover:text-green-400 transition">Saved</a>
+    <a href="#" id="logoutBtn" class="bg-red-500/20 text-red-400 px-5 py-2 rounded-xl border border-red-500/50 hover:bg-red-600 transition">Logout</a>
+  </div>
+</nav>
+
+<div class="flex min-h-[calc(100vh-72px)]">
+
+  <aside class="w-72 glass-sidebar p-8 space-y-3">
+    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Main Menu</p>
+    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+      <i class="fa-solid fa-house"></i> Dashboard
+    </a>
+    <a href="plantrips.html" class="flex items-center gap-3 p-4 bg-green-500/20 text-green-400 rounded-2xl font-bold border border-green-500/30">
+      <i class="fa-solid fa-map-location-dot"></i> Plan Trip
+    </a>
+    <a href="saved.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+      <i class="fa-solid fa-bookmark"></i> Saved Trips
+    </a>
+    <a href="rewards.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+      <i class="fa-solid fa-gift"></i> Rewards
+    </a>
+  </aside>
+
+  <main class="flex-1 p-12 overflow-y-auto flex justify-center items-start">
+    <div class="max-w-3xl w-full glass-form p-10 mt-4">
+      
+      <div class="text-center mb-10">
+        <h2 class="text-4xl font-black tracking-tight mb-2">Plan Your Next Move ✈️</h2>
+        <p class="text-gray-400">Our AI will scout the best hidden gems for you.</p>
+      </div>
+
+      <form id="tripForm" class="space-y-6">
+        <div class="space-y-2">
+          <label class="text-sm font-bold text-green-400 uppercase tracking-wider ml-1">Where to?</label>
+          <input id="destination" type="text" placeholder="Goa, Delhi, Kolkata..." class="w-full p-4 rounded-2xl custom-input" required />
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-green-400 uppercase tracking-wider ml-1">Arrival Date</label>
+            <input id="arrivalDate" type="date" class="w-full p-4 rounded-2xl custom-input" required />
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-green-400 uppercase tracking-wider ml-1">Return Date</label>
+            <input id="returnDate" type="date" class="w-full p-4 rounded-2xl custom-input" required />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-green-400 uppercase tracking-wider ml-1">Budget (₹)</label>
+            <input id="budget" type="number" placeholder="30000" class="w-full p-4 rounded-2xl custom-input" required />
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-green-400 uppercase tracking-wider ml-1">Vibe / Preference</label>
+            <select id="preference" class="w-full p-4 rounded-2xl custom-input appearance-none">
+              <option class="text-slate-900">Adventure</option>
+              <option class="text-slate-900">Relaxation</option>
+              <option class="text-slate-900">Culture</option>
+              <option class="text-slate-900">Nature</option>
+              <option class="text-slate-900">Luxury</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" id="generateBtn" class="w-full py-5 rounded-2xl btn-primary text-xl font-black uppercase tracking-widest mt-4">
+          Generate Itinerary <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>
+        </button>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCtSKfk3j-RaExSaumaeGoQlJQckBDZ32c",
+    authDomain: "hiddentrails-ai.firebaseapp.com",
+    projectId: "hiddentrails-ai",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let currentUserId = null;
+  onAuthStateChanged(auth, (user) => {
+    if (!user) { window.location.href = "auth.html"; return; }
+    currentUserId = user.uid;
+  });
+
+  // Logout
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    signOut(auth).then(() => window.location.href = "auth.html");
+  });
+
+  const form = document.getElementById("tripForm");
+  const btn = document.getElementById("generateBtn");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const destination = document.getElementById("destination").value.trim();
+    const budget = parseInt(document.getElementById("budget").value);
+    const preference = document.getElementById("preference").value;
+    const arrivalDate = document.getElementById("arrivalDate").value;
+    const returnDate = document.getElementById("returnDate").value;
+
+    const diffTime = new Date(returnDate) - new Date(arrivalDate);
+    const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+    if (days <= 0) {
+      alert("Return date must be after arrival date.");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = `Generating... <i class="fa-solid fa-spinner fa-spin ml-2"></i>`;
+
+    try {
+      // Send userId so backend saves the trip to Firestore for us
+      const response = await fetch("http://localhost:5000/generate-itinerary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          destination, days, preference, budget,
+          userId: currentUserId,
+          arrivalDate, returnDate
+        })
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        alert("Backend error: " + errData.error);
+        return;
+      }
+
+      const data = await response.json();
+
+      if (!data || !Array.isArray(data.days)) {
+        alert("AI failed to generate itinerary");
+        return;
+      }
+
+      // If backend saved the trip and returned a tripId, use it directly
+      let tripId = data.tripId;
+
+      // Fallback: save from frontend if backend didn't save (no userId case)
+      if (!tripId) {
+        const docRef = await addDoc(collection(db, "trips"), {
+          destination,
+          daysCount: days,
+          budget,
+          preference,
+          arrivalDate,
+          returnDate,
+          total_estimated_cost: data.total_estimated_cost,
+          days: data.days,
+          createdAt: new Date()
+        });
+        tripId = docRef.id;
+      }
+
+      window.location.href = `itinerary.html?id=${tripId}`;
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Check if your backend server is running.");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "Generate Itinerary";
+    }
+  });
+</script>
+
+</body>
+</html>
