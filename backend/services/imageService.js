@@ -1,42 +1,69 @@
 /**
  * Image Service
  * ---------------
- * Fetches destination images from Wikipedia API (free, no API key needed).
- * Uses smart keyword extraction to find unique images for each landmark.
+ * Fetches destination images using the free Wikipedia/Wikimedia API.
+ * No API key required!
+ *
+ * Strategy:
+ *   1. Search Wikipedia for the landmark/destination
+ *   2. Grab the main page image (thumbnail) from the page summary API
+ *   3. Fall back to a generic travel image if nothing found
  */
 
 import fetch from "node-fetch";
 
-// Fallback image when no destination-specific image is found
+// Fallback image (a beautiful generic landscape)
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=400&fit=crop";
 
-// Common fluff words to strip from queries
-const STRIP_WORDS = /\b(travel|photography|day|morning|afternoon|evening|vibes|trip|explore|visit|arrival|departure|and|the|in|at|of|to|a|an|with|for|from)\b/gi;
+// Common fluff words to strip from queries for better Wikipedia matches
+const STRIP_WORDS =
+  /\b(travel|photography|day|morning|afternoon|evening|vibes|trip|explore|visit|arrival|departure|and|the|in|at|of|to|a|an|with|for|from|bustling|beautiful|famous|iconic|historic|nearby|local|popular|ancient|renowned|magnificent|stunning|traditional|old|new|great)\b/gi;
+
+// In-memory cache: { query -> { url, timestamp } }
+// Avoids re-fetching the same image from Wikipedia on every request
+const imageCache = new Map();
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 /**
- * Get a relevant image for a destination/query using Wikipedia's API.
- * Uses multiple search strategies to find a unique image per landmark.
+ * Get a relevant image for a destination/query using Wikipedia.
+ * Results are cached in memory for fast repeated lookups.
  *
- * @param {string} query - Search query (e.g., "Goa Fort Aguada travel photography")
+ * @param {string} query - Search query (e.g., "Rumi Darwaza lucknow")
  * @returns {Promise<string>} Image URL
  */
 export async function getDestinationImage(query) {
+  // Check cache first
+  const cacheKey = query.toLowerCase().trim();
+  const cached = imageCache.get(cacheKey);
+  if (cached && (Date.now() - cached.timestamp < CACHE_TTL_MS)) {
+    console.log("⚡ Cache hit for:", query);
+    return cached.url;
+  }
+
   try {
-    // Extract meaningful keywords from the query
-    const searchStrategies = buildSearchStrategies(query);
+    const searchTerms = buildSearchStrategies(query);
+    console.log("🖼️ Wikipedia image search strategies:", searchTerms);
 
-    console.log("🖼️ Image search strategies:", searchStrategies);
-
-    // Try each strategy in order until we find a unique image
-    for (const term of searchStrategies) {
+    for (const term of searchTerms) {
       if (!term || term.length < 2) continue;
-      const image = await fetchWikipediaImage(term);
-      if (image) return image;
+
+      // Strategy A: Try the Wikipedia page summary API (gives a nice thumbnail)
+      const image = await fetchWikipediaSummaryImage(term);
+      if (image) {
+        imageCache.set(cacheKey, { url: image, timestamp: Date.now() });
+        return image;
+      }
+
+      // Strategy B: Try Wikipedia image search API
+      const image2 = await fetchWikipediaImageSearch(term);
+      if (image2) {
+        imageCache.set(cacheKey, { url: image2, timestamp: Date.now() });
+        return image2;
+      }
     }
 
-    // Final fallback
-    console.log("⚠️ No Wikipedia image found for:", query);
+    console.log("⚠️ No image found for:", query);
     return FALLBACK_IMAGE;
   } catch (error) {
     console.error("Image fetch error:", error.message);
@@ -45,110 +72,119 @@ export async function getDestinationImage(query) {
 }
 
 /**
- * Build a list of search strategies from a query.
- * Prioritizes specific landmark names over generic destination names.
- *
- * E.g., "Goa Fort Aguada travel photography" =>
- *   ["Fort Aguada Goa", "Fort Aguada", "Goa"]
- *
- * @param {string} query
- * @returns {string[]} Array of search terms to try, most specific first
+ * Build search strategies — progressively more general.
  */
 function buildSearchStrategies(query) {
-  // Step 1: Strip fluff words
-  const cleaned = query.replace(STRIP_WORDS, "").replace(/\s+/g, " ").trim();
-  const words = cleaned.split(" ").filter(w => w.length > 1);
+  // Strip fluff words
+  const cleaned = query
+    .replace(STRIP_WORDS, "")
+    .replace(/['']/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const words = cleaned.split(" ").filter((w) => w.length > 2);
 
-  if (words.length === 0) return [query.split(" ")[0]];
+  if (words.length === 0) return [query.trim()];
   if (words.length === 1) return [words[0]];
 
-  // Step 2: Identify the destination (usually first word) vs landmark (remaining)
-  const destination = words[0]; // e.g., "Goa"
-  const landmarkWords = words.slice(1); // e.g., ["Fort", "Aguada"]
+  // Identify destination (usually last word) vs landmark (other words)
+  const destination = words[words.length - 1];
+  const landmarkWords = words.slice(0, -1);
 
   const strategies = [];
 
-  // Strategy 1: Full landmark name + destination (most specific)
+  // Strategy 1: Full cleaned query
+  strategies.push(cleaned);
+
+  // Strategy 2: Landmark + destination
   if (landmarkWords.length > 0) {
     strategies.push(landmarkWords.join(" ") + " " + destination);
   }
 
-  // Strategy 2: Just landmark name (e.g., "Fort Aguada")
+  // Strategy 3: Just landmark name
   if (landmarkWords.length > 0) {
     strategies.push(landmarkWords.join(" "));
   }
 
-  // Strategy 3: First 3 meaningful words together
-  if (words.length >= 3) {
-    strategies.push(words.slice(0, 3).join(" "));
+  // Strategy 4: destination + first landmark word
+  if (landmarkWords.length > 0) {
+    strategies.push(destination + " " + landmarkWords[0]);
   }
 
-  // Strategy 4: Just destination name (generic fallback)
+  // Strategy 5: Just destination
   strategies.push(destination);
 
-  // Deduplicate
   return [...new Set(strategies)];
 }
 
 /**
- * Fetch a page thumbnail from Wikipedia's API.
- * Uses opensearch to find the best matching page first,
- * then fetches its thumbnail.
+ * Fetch the main image from a Wikipedia page summary.
+ * Uses the REST API: https://en.wikipedia.org/api/rest_v1/page/summary/{title}
  *
- * @param {string} searchTerm - Search term (e.g., "Fort Aguada")
- * @returns {Promise<string|null>} Image URL or null if not found
+ * This is the best approach — it returns the main thumbnail for a Wikipedia article.
  */
-async function fetchWikipediaImage(searchTerm) {
+async function fetchWikipediaSummaryImage(searchTerm) {
   try {
-    // Step 1: Search Wikipedia for the best matching page
-    const searchUrl = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(
-      searchTerm
-    )}&limit=3&format=json`;
-
+    // Step 1: Search Wikipedia for the best matching article title
+    const searchUrl = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(searchTerm)}&limit=3&format=json`;
     const searchRes = await fetch(searchUrl);
+    if (!searchRes.ok) return null;
+
     const searchData = await searchRes.json();
-    const titles = searchData[1]; // Array of matching page titles
+    // opensearch returns: [query, [titles], [descriptions], [urls]]
+    const titles = searchData[1];
+    if (!titles || titles.length === 0) return null;
 
-    if (!titles || titles.length === 0) {
-      // Fallback to direct title search
-      return await fetchPageImage(searchTerm);
-    }
-
-    // Step 2: Try each matching page until we find one with an image
+    // Step 2: Try each matching title's page summary for an image
     for (const title of titles) {
-      const image = await fetchPageImage(title);
-      if (image) return image;
+      const summaryUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+      const summaryRes = await fetch(summaryUrl);
+      if (!summaryRes.ok) continue;
+
+      const summaryData = await summaryRes.json();
+
+      // The "originalimage" or "thumbnail" field has the image
+      const imageUrl =
+        summaryData.originalimage?.source || summaryData.thumbnail?.source;
+
+      if (imageUrl) {
+        console.log("✅ Wikipedia image found for:", searchTerm, "→", title);
+        return imageUrl;
+      }
     }
 
     return null;
   } catch (err) {
-    console.warn("Wikipedia search error:", err.message);
+    console.warn("Wikipedia summary fetch error:", err.message);
     return null;
   }
 }
 
 /**
- * Fetch the thumbnail image from a specific Wikipedia page.
- *
- * @param {string} title - Exact Wikipedia page title
- * @returns {Promise<string|null>} Image URL or null
+ * Fallback: search for images using the Wikipedia image query API.
+ * Uses action=query with prop=pageimages.
  */
-async function fetchPageImage(title) {
-  const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(
-    title
-  )}&prop=pageimages&format=json&pithumbsize=800&redirects=1`;
+async function fetchWikipediaImageSearch(searchTerm) {
+  try {
+    const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(searchTerm)}&prop=pageimages&format=json&pithumbsize=800&redirects=1`;
+    const res = await fetch(url);
+    if (!res.ok) return null;
 
-  const response = await fetch(url);
-  const data = await response.json();
-  const pages = data.query?.pages;
+    const data = await res.json();
+    const pages = data.query?.pages;
+    if (!pages) return null;
 
-  if (pages) {
-    const page = Object.values(pages)[0];
-    if (page.thumbnail?.source) {
-      console.log("✅ Wikipedia image found for:", title);
-      return page.thumbnail.source;
+    for (const pageId of Object.keys(pages)) {
+      if (pageId === "-1") continue; // Page not found
+      const thumb = pages[pageId]?.thumbnail?.source;
+      if (thumb) {
+        console.log("✅ Wikipedia image (query API) found for:", searchTerm);
+        return thumb;
+      }
     }
-  }
 
-  return null;
+    return null;
+  } catch (err) {
+    console.warn("Wikipedia image query error:", err.message);
+    return null;
+  }
 }

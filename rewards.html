@@ -7,44 +7,37 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
-                  url('https://images.unsplash.com/photo-1533105079780-92b9be482077?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background: #ffffff;
       min-height: 100vh;
     }
     .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 24px;
       transition: all 0.3s ease;
     }
     .points-text {
-      text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
-      background: linear-gradient(to bottom, #ffffff, #10b981);
+      background: linear-gradient(to bottom, #1e293b, #10b981);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .badge-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .badge-card:hover {
-      background: rgba(16, 185, 129, 0.1);
+      background: rgba(16, 185, 129, 0.05);
       border-color: rgba(16, 185, 129, 0.4);
-      transform: translateY(-10px) scale(1.02);
+      transform: translateY(-6px) scale(1.02);
     }
     .glass-sidebar {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(12px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
     }
     .coupon-card {
-      background: rgba(255, 255, 255, 0.04);
+      background: #fffbeb;
       border: 1px dashed rgba(245, 158, 11, 0.4);
       border-radius: 20px;
       transition: all 0.3s ease;
@@ -59,9 +52,9 @@
       background: linear-gradient(90deg, #f59e0b, #ef4444, #8b5cf6);
     }
     .coupon-card:hover {
-      background: rgba(245, 158, 11, 0.08);
+      background: rgba(245, 158, 11, 0.06);
       transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(245, 158, 11, 0.1);
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.08);
     }
     .coupon-code {
       background: rgba(245, 158, 11, 0.15);
@@ -69,17 +62,88 @@
       font-family: monospace;
       letter-spacing: 3px;
     }
+    /* Coupon Store */
+    .store-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+    .store-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+    .store-card .brand-strip {
+      height: 6px;
+      width: 100%;
+    }
+    .store-card.unlockable {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .store-card.unlockable:hover {
+      border-color: rgba(16, 185, 129, 0.7);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.12);
+    }
+    .store-card.locked {
+      opacity: 0.65;
+    }
+    .store-card.locked:hover {
+      opacity: 0.85;
+    }
+    .redeem-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .redeem-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    .redeem-btn:disabled {
+      background: #e2e8f0;
+      color: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .progress-mini {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-mini-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.6s ease;
+    }
+    @keyframes redeemPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .redeem-success {
+      animation: redeemPop 0.4s ease;
+    }
   </style>
 </head>
 
-<body class="font-sans text-white">
+<body class="font-sans text-gray-800">
 
-<nav class="bg-black/30 backdrop-blur-lg border-b border-white/10 px-8 py-4 flex justify-between items-center sticky top-0 z-50">
+<nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
   <div class="flex items-center gap-2">
     <i class="fa-solid fa-compass text-green-400 text-2xl"></i>
-    <h1 class="text-2xl font-black text-white tracking-tight">HiddenTrails.AI</h1>
+    <h1 class="text-xl font-black text-gray-800 tracking-tight">HiddenTrails.AI</h1>
   </div>
-  <div class="flex items-center space-x-8 font-medium text-gray-200">
+  <div class="flex items-center space-x-8 font-medium text-gray-600">
     <a href="index.html" class="hover:text-green-400 transition">Home</a>
     <a href="dashboard.html" class="hover:text-green-400 transition">Dashboard</a>
     <a href="saved.html" class="hover:text-green-400 transition">Saved</a>
@@ -90,20 +154,20 @@
 <div class="flex min-h-[calc(100vh-72px)]">
 
   <aside class="w-72 glass-sidebar p-8 space-y-3">
-    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Main Menu</p>
-    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Main Menu</p>
+    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-house"></i> Dashboard
     </a>
-    <a href="plantrips.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="plantrips.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-map-location-dot"></i> Plan Trip
     </a>
-    <a href="saved.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="saved.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-bookmark"></i> Saved Trips
     </a>
     <a href="rewards.html" class="flex items-center gap-3 p-4 bg-green-500/20 text-green-400 rounded-2xl font-bold border border-green-500/30">
       <i class="fa-solid fa-gift"></i> Rewards
     </a>
-    <a href="photo-challenge.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="photo-challenge.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-camera-retro"></i> Photo Challenge
     </a>
   </aside>
@@ -112,8 +176,8 @@
     <div class="max-w-5xl mx-auto">
       
       <header class="mb-12">
-        <h2 class="text-4xl font-black tracking-tight">Rewards & Points 🏆</h2>
-        <p class="text-gray-400 mt-2">Unlock exclusive perks by exploring the unexplored.</p>
+        <h2 class="text-3xl font-black tracking-tight text-gray-800">Rewards & Points 🏆</h2>
+        <p class="text-gray-500 mt-2 text-sm">Unlock exclusive perks by exploring the unexplored.</p>
       </header>
 
       <!-- POINTS OVERVIEW — DYNAMIC -->
@@ -129,7 +193,7 @@
               <span id="levelLabel">Level 1: Rookie</span>
               <span id="progressLabel" class="text-green-400">0% to Level 2</span>
             </div>
-            <div class="h-4 w-full bg-white/10 rounded-full overflow-hidden">
+            <div class="h-4 w-full bg-gray-200 rounded-full overflow-hidden">
               <div id="progressBar" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-700 shadow-lg shadow-green-500/40" style="width: 0%"></div>
             </div>
             <p class="text-[10px] text-gray-500 text-center italic">Tip: Complete Photo Challenges to boost points fast!</p>
@@ -155,15 +219,24 @@
         </div>
       </div>
 
-      <!-- YOUR COUPONS -->
+      <!-- COUPON STORE -->
+      <h4 class="text-xl font-bold mb-2 flex items-center gap-2">
+        <i class="fa-solid fa-store text-amber-500"></i> Coupon Store
+      </h4>
+      <p class="text-gray-400 text-sm mb-6">Earn points from Photo Challenges & trips, then redeem them for real coupons!</p>
+      <div id="storeGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- YOUR REDEEMED COUPONS -->
       <h4 class="text-xl font-bold mb-6 flex items-center gap-2">
-        <i class="fa-solid fa-ticket text-amber-500"></i> Your Coupons
+        <i class="fa-solid fa-ticket text-green-500"></i> Your Redeemed Coupons
       </h4>
       <div id="couponGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
         <!-- Populated by JS -->
       </div>
       <p id="noCoupons" class="hidden text-gray-500 text-center py-8 text-sm italic mb-12">
-        No coupons yet! Complete <a href="photo-challenge.html" class="text-amber-400 underline">Photo Challenges</a> to earn your first coupon at 100 points.
+        No coupons redeemed yet! Browse the store above and redeem your points.
       </p>
 
       <!-- BADGES -->
@@ -198,11 +271,15 @@
   function getCoupons() { return JSON.parse(localStorage.getItem('ht_coupons') || '[]'); }
 
   const allCouponMilestones = [
-    { at: 100, code: 'TRAIL10', discount: '10% OFF', brand: 'MakeMyTrip', icon: '✈️' },
-    { at: 250, code: 'HIDDEN25', discount: '25% OFF', brand: 'Goibibo Hotels', icon: '🏨' },
-    { at: 400, code: 'EXPLORE40', discount: '₹400 OFF', brand: 'IRCTC Tickets', icon: '🚂' },
-    { at: 600, code: 'WANDER50', discount: '50% OFF', brand: 'Zostel Stays', icon: '🏕️' },
-    { at: 800, code: 'EPIC80', discount: '₹800 OFF', brand: 'Cleartrip Flights', icon: '🛫' }
+    { at: 100,  cost: 80,   code: 'TRAIL10',   discount: '10% OFF',   brand: 'MakeMyTrip',       icon: '✈️',  color: '#3b82f6',  desc: 'Domestic flight bookings' },
+    { at: 150,  cost: 120,  code: 'FOOD15',    discount: '15% OFF',   brand: 'Zomato',           icon: '🍔',  color: '#ef4444',  desc: 'Food delivery orders' },
+    { at: 250,  cost: 200,  code: 'HIDDEN25',  discount: '25% OFF',   brand: 'Goibibo Hotels',   icon: '🏨',  color: '#f59e0b',  desc: 'Hotel bookings nationwide' },
+    { at: 350,  cost: 280,  code: 'CAFE35',    discount: '₹350 OFF',  brand: 'Starbucks',        icon: '☕',  color: '#059669',  desc: 'Any beverage of your choice' },
+    { at: 400,  cost: 350,  code: 'EXPLORE40', discount: '₹400 OFF',  brand: 'IRCTC Tickets',    icon: '🚂',  color: '#6366f1',  desc: 'Train tickets across India' },
+    { at: 500,  cost: 420,  code: 'SHOP50',    discount: '₹500 OFF',  brand: 'Amazon',           icon: '📦',  color: '#f97316',  desc: 'Travel gear & accessories' },
+    { at: 600,  cost: 500,  code: 'WANDER50',  discount: '50% OFF',   brand: 'Zostel Stays',     icon: '🏕️',  color: '#8b5cf6',  desc: 'Hostel stays in any city' },
+    { at: 800,  cost: 700,  code: 'EPIC80',    discount: '₹800 OFF',  brand: 'Cleartrip Flights',icon: '🛫',  color: '#ec4899',  desc: 'International flight deals' },
+    { at: 1000, cost: 900,  code: 'LEGEND',    discount: '₹1500 OFF', brand: 'Booking.com',      icon: '🌍',  color: '#0ea5e9',  desc: 'Worldwide hotel bookings' },
   ];
 
   // ========== LEVEL SYSTEM (synced with backend constants) ==========
@@ -264,20 +341,103 @@
       : '🎉 You have reached the highest level! Keep exploring!';
   }
 
-  // ========== RENDER COUPONS ==========
+  // ========== RENDER COUPON STORE ==========
+  function renderCouponStore() {
+    const pts = getPoints();
+    const redeemed = getCoupons();
+    const grid = document.getElementById('storeGrid');
+    grid.innerHTML = '';
+
+    allCouponMilestones.forEach(m => {
+      const isRedeemed = redeemed.find(c => c.code === m.code);
+      const canAfford = pts >= m.cost;
+      const isUnlocked = pts >= m.at;
+      const progress = Math.min(100, (pts / m.at) * 100);
+
+      let statusHTML = '';
+      let cardClass = 'store-card';
+
+      if (isRedeemed) {
+        statusHTML = `<span class="text-green-500 text-xs font-bold"><i class="fa-solid fa-circle-check"></i> Redeemed</span>`;
+        cardClass += ' unlockable';
+      } else if (isUnlocked && canAfford) {
+        statusHTML = `<button class="redeem-btn" onclick="redeemCoupon('${m.code}')"><i class="fa-solid fa-gift mr-1"></i> Redeem (${m.cost} pts)</button>`;
+        cardClass += ' unlockable';
+      } else if (isUnlocked && !canAfford) {
+        statusHTML = `<button class="redeem-btn" disabled>Need ${m.cost - pts} more pts</button>`;
+        cardClass += ' locked';
+      } else {
+        statusHTML = `
+          <div class="w-full">
+            <div class="flex justify-between text-[10px] text-gray-400 mb-1">
+              <span><i class="fa-solid fa-lock"></i> Unlocks at ${m.at} pts</span>
+              <span>${Math.round(progress)}%</span>
+            </div>
+            <div class="progress-mini">
+              <div class="progress-mini-fill" style="width:${progress}%; background:${m.color}"></div>
+            </div>
+          </div>`;
+        cardClass += ' locked';
+      }
+
+      grid.innerHTML += `
+        <div class="${cardClass}" id="store-${m.code}">
+          <div class="brand-strip" style="background: linear-gradient(90deg, ${m.color}, ${m.color}88)"></div>
+          <div class="p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl" style="background: ${m.color}15">
+                ${m.icon}
+              </div>
+              <div class="flex-1">
+                <p class="font-bold text-base text-gray-800">${m.brand}</p>
+                <p class="text-gray-400 text-xs">${m.desc}</p>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xl font-black" style="color: ${m.color}">${m.discount}</span>
+              <span class="text-xs text-gray-400 font-semibold bg-gray-100 px-2 py-1 rounded-lg">${m.cost} pts</span>
+            </div>
+            <div class="flex items-center justify-center">
+              ${statusHTML}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  // ========== REDEEM COUPON ==========
+  window.redeemCoupon = function(code) {
+    const m = allCouponMilestones.find(c => c.code === code);
+    if (!m) return;
+
+    const pts = getPoints();
+    if (pts < m.cost) {
+      alert('Not enough points!');
+      return;
+    }
+
+    // Deduct points and save coupon
+    setPoints(pts - m.cost);
+    const coupons = getCoupons();
+    if (!coupons.find(c => c.code === code)) {
+      coupons.push(m);
+      localStorage.setItem('ht_coupons', JSON.stringify(coupons));
+    }
+
+    // Animate the card
+    const card = document.getElementById('store-' + code);
+    if (card) card.classList.add('redeem-success');
+
+    // Re-render everything
+    renderAll();
+  };
+
+  // ========== RENDER REDEEMED COUPONS ==========
   function renderCoupons() {
     const coupons = getCoupons();
-    const pts = getPoints();
     const grid = document.getElementById('couponGrid');
     const noMsg = document.getElementById('noCoupons');
-
-    // Check and award any new milestones
-    allCouponMilestones.forEach(m => {
-      if (pts >= m.at && !coupons.find(c => c.code === m.code)) {
-        coupons.push(m);
-        localStorage.setItem('ht_coupons', JSON.stringify(coupons));
-      }
-    });
 
     if (coupons.length === 0) {
       grid.classList.add('hidden');
@@ -294,33 +454,15 @@
         <div class="coupon-card p-6 flex items-center gap-5">
           <div class="text-4xl">${c.icon}</div>
           <div class="flex-1">
-            <p class="font-bold text-lg text-white">${c.discount}</p>
-            <p class="text-gray-400 text-sm">${c.brand}</p>
+            <p class="font-bold text-lg text-gray-800">${c.discount}</p>
+            <p class="text-gray-500 text-sm">${c.brand}</p>
           </div>
           <div class="text-center">
             <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Code</p>
-            <span class="coupon-code text-amber-400 font-bold px-3 py-2 rounded-lg text-sm inline-block cursor-pointer" onclick="copyCode('${c.code}', this)" title="Click to copy">${c.code}</span>
+            <span class="coupon-code text-amber-600 font-bold px-3 py-2 rounded-lg text-sm inline-block cursor-pointer" onclick="copyCode('${c.code}', this)" title="Click to copy">${c.code}</span>
           </div>
         </div>
       `;
-    });
-
-    // Show locked milestones user hasn't reached yet
-    allCouponMilestones.forEach(m => {
-      if (pts < m.at) {
-        grid.innerHTML += `
-          <div class="coupon-card p-6 flex items-center gap-5 opacity-40 grayscale">
-            <div class="text-4xl">${m.icon}</div>
-            <div class="flex-1">
-              <p class="font-bold text-lg text-white">${m.discount}</p>
-              <p class="text-gray-400 text-sm">${m.brand}</p>
-            </div>
-            <div class="text-center">
-              <p class="text-[10px] text-gray-400"><i class="fa-solid fa-lock"></i> ${m.at} pts</p>
-            </div>
-          </div>
-        `;
-      }
     });
   }
 
@@ -395,6 +537,7 @@
   // ========== INIT ==========
   function renderAll() {
     renderPoints();
+    renderCouponStore();
     renderCoupons();
     renderBadges();
     updateChallengeBadge();

@@ -7,57 +7,50 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)),
-                  url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background: #ffffff;
       min-height: 100vh;
     }
 
     .trip-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 24px;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: block;
     }
     .trip-card:hover {
-      transform: translateY(-8px);
-      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-6px);
+      background: #f1f5f9;
       border-color: #10b981;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
     }
 
     .glass-sidebar {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
     }
 
     .status-badge {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 1); }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
   </style>
 </head>
 
-<body class="font-sans text-white">
+<body class="font-sans text-gray-800">
 
-<nav class="bg-black/30 backdrop-blur-lg border-b border-white/10 px-8 py-4 flex justify-between items-center sticky top-0 z-50">
+<nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
   <div class="flex items-center gap-2">
     <i class="fa-solid fa-compass text-green-400 text-2xl"></i>
-    <h1 class="text-2xl font-black text-white tracking-tight">HiddenTrails.AI</h1>
+    <h1 class="text-xl font-black text-gray-800 tracking-tight">HiddenTrails.AI</h1>
   </div>
-  <div class="flex items-center space-x-8 font-medium text-gray-200">
+  <div class="flex items-center space-x-8 font-medium text-gray-600">
     <a href="index.html" class="hover:text-green-400 transition">Home</a>
     <a href="dashboard.html" class="hover:text-green-400 transition">Dashboard</a>
     <a href="saved.html" class="text-green-400">Saved</a>
@@ -68,20 +61,20 @@
 <div class="flex min-h-[calc(100vh-72px)]">
 
   <aside class="w-72 glass-sidebar p-8 space-y-3">
-    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Main Menu</p>
-    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Main Menu</p>
+    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-house"></i> Dashboard
     </a>
-    <a href="plantrips.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="plantrips.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-map-location-dot"></i> Plan Trip
     </a>
     <a href="saved.html" class="flex items-center gap-3 p-4 bg-green-500/20 text-green-400 rounded-2xl font-bold border border-green-500/30">
       <i class="fa-solid fa-bookmark"></i> Saved Trips
     </a>
-    <a href="rewards.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="rewards.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-gift"></i> Rewards
     </a>
-    <a href="photo-challenge.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="photo-challenge.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-camera"></i> Photo Challenge
     </a>
   </aside>
@@ -90,8 +83,8 @@
     <div class="max-w-6xl mx-auto">
       <header class="mb-12 flex items-center justify-between">
         <div>
-          <h2 class="text-4xl font-black tracking-tight">Saved Journeys 🔖</h2>
-          <p class="text-gray-400 mt-2">Pick up where you left off on your hidden adventures.</p>
+          <h2 class="text-3xl font-black tracking-tight text-gray-800">Saved Journeys 🔖</h2>
+          <p class="text-gray-500 mt-2 text-sm">Pick up where you left off on your hidden adventures.</p>
         </div>
         <a href="plantrips.html" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-bold transition-all transform hover:scale-105">
           <i class="fa-solid fa-plus mr-2"></i> New Trip
@@ -111,7 +104,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
-  import { getFirestore, collection, getDocs, deleteDoc, doc, orderBy, query, where } from
+  import { getFirestore, collection, getDocs, deleteDoc, doc, orderBy, query, where, updateDoc } from
     "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -138,7 +131,7 @@
       el.closest(".trip-card").remove();
       // Check if container is now empty
       if (container.children.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center p-20 bg-white/5 rounded-3xl border border-dashed border-white/20">
+        container.innerHTML = `<div class="col-span-full text-center p-20 bg-gray-50 rounded-3xl border border-dashed border-gray-300">
           <div class="text-6xl mb-4">🧭</div>
           <p class="text-gray-400 text-lg mb-4">No trips saved. Plan your first adventure!</p>
           <a href="plantrips.html" class="inline-block bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl font-bold transition">Plan a Trip <i class="fa-solid fa-arrow-right ml-2"></i></a>
@@ -189,7 +182,7 @@
 
   function renderTrips(snapshot) {
     if (snapshot.empty) {
-      container.innerHTML = `<div class="col-span-full text-center p-20 bg-white/5 rounded-3xl border border-dashed border-white/20">
+      container.innerHTML = `<div class="col-span-full text-center p-20 bg-gray-50 rounded-3xl border border-dashed border-gray-300">
         <div class="text-6xl mb-4">🧭</div>
         <p class="text-gray-400 text-lg mb-4">No trips saved yet. Time to plan one!</p>
         <a href="plantrips.html" class="inline-block bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl font-bold transition">Plan a Trip <i class="fa-solid fa-arrow-right ml-2"></i></a>
@@ -197,20 +190,38 @@
       return;
     }
 
+    // Known fallback URLs — if hero_image matches any of these, re-fetch a real image
+    const FALLBACK_URLS = [
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b",
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
+    ];
+
+    function isFallbackImage(url) {
+      if (!url) return true;
+      return FALLBACK_URLS.some(fb => url.includes(fb.split("?")[0]));
+    }
+
     container.innerHTML = "";
-    snapshot.forEach(docSnap => {
+    snapshot.forEach(async (docSnap) => {
       const t = docSnap.data();
       const daysCount = t.days?.length || 0;
       const style = t.preference || "Custom";
 
+      // Determine the image — if it's a fallback, fetch a real one
+      let heroImage = t.hero_image || "";
+      const needsFetch = isFallbackImage(heroImage);
+
       const card = document.createElement("div");
       card.className = "trip-card group";
+
+      const imgId = `img-${docSnap.id}`;
 
       card.innerHTML = `
         <a href="itinerary.html?id=${docSnap.id}" class="block">
           <div class="relative h-52 overflow-hidden">
-            <img src="${t.hero_image || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80'}"
-                 class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+            <img id="${imgId}" src="${needsFetch ? '' : heroImage}"
+                 class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
+                 style="${needsFetch ? 'background:#e2e8f0;' : ''}">
             <div class="absolute top-4 right-4 status-badge px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
               ${style}
             </div>
@@ -226,7 +237,7 @@
 
             ${t.arrivalDate ? `<p class="text-xs text-gray-500 mb-4"><i class="fa-solid fa-plane-departure mr-1"></i> ${t.arrivalDate} → ${t.returnDate}</p>` : ''}
 
-            <div class="flex items-center justify-between p-3 bg-white/5 rounded-xl mb-4">
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl mb-4">
               <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Hidden Score</span>
               <span class="text-green-400 font-black">${t.hidden_score || "8.2"} <small class="text-[10px] opacity-60">/ 10</small></span>
             </div>
@@ -246,6 +257,23 @@
       `;
 
       container.appendChild(card);
+
+      // If this trip has a stale/fallback image, fetch a real one from the API
+      if (needsFetch && t.destination) {
+        try {
+          const res = await fetch(`http://localhost:5000/get-destination-image?query=${encodeURIComponent(t.destination)}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.image) {
+              document.getElementById(imgId).src = data.image;
+              // Save it back to Firebase so next load is instant
+              await updateDoc(doc(db, "trips", docSnap.id), { hero_image: data.image });
+            }
+          }
+        } catch (e) {
+          console.warn("Failed to fetch hero image for", t.destination);
+        }
+      }
     });
   }
 </script>

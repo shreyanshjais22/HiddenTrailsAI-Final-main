@@ -28,6 +28,23 @@ export async function verifyPhoto(
   referenceImageUrl,
   landmarkName
 ) {
+  // Convert reference image URL to base64 (Groq may not fetch external URLs)
+  let referenceBase64 = referenceImageUrl;
+  if (referenceImageUrl && !referenceImageUrl.startsWith("data:")) {
+    try {
+      const imgRes = await fetch(referenceImageUrl);
+      if (imgRes.ok) {
+        const buffer = await imgRes.buffer();
+        const contentType = imgRes.headers.get("content-type") || "image/jpeg";
+        referenceBase64 = `data:${contentType};base64,${buffer.toString("base64")}`;
+        console.log("✅ Reference image converted to base64");
+      }
+    } catch (err) {
+      console.warn("⚠️ Could not convert reference image to base64:", err.message);
+      // Keep the URL as fallback
+    }
+  }
+
   const response = await fetch(GROQ_BASE_URL, {
     method: "POST",
     headers: getGroqHeaders(),
@@ -52,7 +69,7 @@ Respond ONLY in this exact JSON format, no other text:
             },
             {
               type: "image_url",
-              image_url: { url: referenceImageUrl },
+              image_url: { url: referenceBase64 },
             },
             {
               type: "image_url",
@@ -67,6 +84,12 @@ Respond ONLY in this exact JSON format, no other text:
   });
 
   const data = await response.json();
+
+  // Log errors from the API
+  if (data.error) {
+    console.error("❌ Groq API error:", JSON.stringify(data.error));
+  }
+
   const aiText = data.choices?.[0]?.message?.content || "";
 
   console.log("📝 Vision AI response:", aiText);

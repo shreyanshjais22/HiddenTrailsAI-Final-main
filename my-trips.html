@@ -7,57 +7,50 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)),
-                  url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background: #ffffff;
       min-height: 100vh;
     }
 
     .glass-sidebar {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(12px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
     }
 
     .trip-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 24px;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: block;
     }
     .trip-card:hover {
-      transform: translateY(-8px);
-      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-6px);
+      background: #f1f5f9;
       border-color: #10b981;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
     }
 
     .status-badge {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 1); }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
   </style>
 </head>
 
-<body class="font-sans text-white">
+<body class="font-sans text-gray-800">
 
-<nav class="bg-black/30 backdrop-blur-lg border-b border-white/10 px-8 py-4 flex justify-between items-center sticky top-0 z-50">
+<nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
   <div class="flex items-center gap-2">
     <i class="fa-solid fa-compass text-green-400 text-2xl"></i>
-    <h1 class="text-2xl font-black text-white tracking-tight">HiddenTrails.AI</h1>
+    <h1 class="text-xl font-black text-gray-800 tracking-tight">HiddenTrails.AI</h1>
   </div>
-  <div class="flex items-center space-x-8 font-medium text-gray-200">
+  <div class="flex items-center space-x-8 font-medium text-gray-600">
     <a href="index.html" class="hover:text-green-400 transition">Home</a>
     <a href="dashboard.html" class="hover:text-green-400 transition">Dashboard</a>
     <a href="saved.html" class="hover:text-green-400 transition">Saved</a>
@@ -68,20 +61,20 @@
 <div class="flex min-h-[calc(100vh-72px)]">
 
   <aside class="w-72 glass-sidebar p-8 space-y-3">
-    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Main Menu</p>
-    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Main Menu</p>
+    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-house"></i> Dashboard
     </a>
-    <a href="plantrips.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="plantrips.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-map-location-dot"></i> Plan Trip
     </a>
-    <a href="saved.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="saved.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-bookmark"></i> Saved Trips
     </a>
-    <a href="rewards.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="rewards.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-gift"></i> Rewards
     </a>
-    <a href="photo-challenge.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="photo-challenge.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-camera"></i> Photo Challenge
     </a>
   </aside>
@@ -89,8 +82,8 @@
   <main class="flex-1 p-12 overflow-y-auto">
     <div class="max-w-6xl mx-auto">
       <header class="mb-12">
-        <h2 class="text-4xl font-black tracking-tight">My Trips ✈️</h2>
-        <p class="text-gray-400 mt-2">All your AI-generated itineraries in one place.</p>
+        <h2 class="text-3xl font-black tracking-tight text-gray-800">My Trips ✈️</h2>
+        <p class="text-gray-500 mt-2 text-sm">All your AI-generated itineraries in one place.</p>
       </header>
 
       <div id="tripsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -206,7 +199,7 @@
         const fallbackSnap = await getDocs(fallbackQ);
         container.innerHTML = "";
         if (fallbackSnap.empty) {
-          container.innerHTML = `<div class="col-span-full text-center p-20 bg-white/5 rounded-3xl border border-dashed border-white/20">
+          container.innerHTML = `<div class="col-span-full text-center p-20 bg-gray-50 rounded-3xl border border-dashed border-gray-300">
             <p class="text-gray-400 text-lg">No trips found. <a href="plantrips.html" class="text-green-400 underline">Plan one now!</a></p>
           </div>`;
           return;

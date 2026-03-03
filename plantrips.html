@@ -6,51 +6,43 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* ✅ DARK GLASSMORPHIC BACKGROUND */
+    /* ✅ WHITE BACKGROUND */
     body {
-      background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
-                  url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background: #ffffff;
       min-height: 100vh;
     }
 
-    /* ✅ FORM CONTAINER GLASSMORPHISM */
+    /* ✅ FORM CONTAINER */
     .glass-form {
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 32px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     }
 
     /* ✅ INPUT STYLING */
     .custom-input {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border: 1px solid rgba(255, 255, 255, 0.2) !important;
-      color: white !important;
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      color: #1e293b !important;
       transition: all 0.3s ease;
     }
     .custom-input:focus {
       border-color: #10b981 !important;
-      background: rgba(255, 255, 255, 0.15) !important;
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+      background: #ffffff !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
       outline: none;
     }
-    .custom-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+    .custom-input::placeholder { color: #94a3b8; }
 
     /* Custom Date Picker Icon Color */
     input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(1);
       cursor: pointer;
     }
 
     .glass-sidebar {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(12px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
     }
 
     .btn-primary {
@@ -68,14 +60,14 @@
   </style>
 </head>
 
-<body class="font-sans text-white">
+<body class="font-sans text-gray-800">
 
-<nav class="bg-black/30 backdrop-blur-lg border-b border-white/10 px-8 py-4 flex justify-between items-center sticky top-0 z-50">
+<nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
   <div class="flex items-center gap-2">
     <i class="fa-solid fa-compass text-green-400 text-2xl"></i>
-    <h1 class="text-2xl font-black text-white tracking-tight">HiddenTrails.AI</h1>
+    <h1 class="text-xl font-black text-gray-800 tracking-tight">HiddenTrails.AI</h1>
   </div>
-  <div class="flex items-center space-x-8 font-medium text-gray-200">
+  <div class="flex items-center space-x-8 font-medium text-gray-600">
     <a href="index.html" class="hover:text-green-400 transition">Home</a>
     <a href="dashboard.html" class="hover:text-green-400 transition">Dashboard</a>
     <a href="saved.html" class="hover:text-green-400 transition">Saved</a>
@@ -86,17 +78,17 @@
 <div class="flex min-h-[calc(100vh-72px)]">
 
   <aside class="w-72 glass-sidebar p-8 space-y-3">
-    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Main Menu</p>
-    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Main Menu</p>
+    <a href="dashboard.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-house"></i> Dashboard
     </a>
     <a href="plantrips.html" class="flex items-center gap-3 p-4 bg-green-500/20 text-green-400 rounded-2xl font-bold border border-green-500/30">
       <i class="fa-solid fa-map-location-dot"></i> Plan Trip
     </a>
-    <a href="saved.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="saved.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-bookmark"></i> Saved Trips
     </a>
-    <a href="rewards.html" class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition">
+    <a href="rewards.html" class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition">
       <i class="fa-solid fa-gift"></i> Rewards
     </a>
   </aside>
@@ -105,8 +97,8 @@
     <div class="max-w-3xl w-full glass-form p-10 mt-4">
       
       <div class="text-center mb-10">
-        <h2 class="text-4xl font-black tracking-tight mb-2">Plan Your Next Move ✈️</h2>
-        <p class="text-gray-400">Our AI will scout the best hidden gems for you.</p>
+        <h2 class="text-3xl font-black tracking-tight mb-2 text-gray-800">Plan Your Next Move ✈️</h2>
+        <p class="text-gray-500 text-sm">Our AI will scout the best hidden gems for you.</p>
       </div>
 
       <form id="tripForm" class="space-y-6">

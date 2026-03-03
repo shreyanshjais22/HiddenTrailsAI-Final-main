@@ -11,36 +11,28 @@
     />
     <style>
       body {
-        background:
-          linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.88)),
-          url("https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+        background: #ffffff;
         min-height: 100vh;
       }
       .glass-card {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
         border-radius: 24px;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
       .glass-card:hover {
-        background: rgba(255, 255, 255, 0.1);
+        background: #f1f5f9;
         border-color: rgba(245, 158, 11, 0.4);
         transform: translateY(-6px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
       }
       .glass-sidebar {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(12px);
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        background: #f8fafc;
+        border-right: 1px solid #e2e8f0;
       }
       .challenge-card {
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
         border-radius: 20px;
         transition: all 0.35s ease;
         cursor: pointer;
@@ -48,8 +40,8 @@
       }
       .challenge-card:hover {
         border-color: rgba(245, 158, 11, 0.5);
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 50px rgba(245, 158, 11, 0.15);
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 12px 30px rgba(245, 158, 11, 0.1);
       }
       .challenge-card img {
         transition: transform 0.5s ease;
@@ -200,18 +192,18 @@
     </style>
   </head>
 
-  <body class="font-sans text-white">
+  <body class="font-sans text-gray-800">
     <!-- NAV -->
     <nav
-      class="bg-black/30 backdrop-blur-lg border-b border-white/10 px-8 py-4 flex justify-between items-center sticky top-0 z-50"
+      class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm"
     >
       <div class="flex items-center gap-2">
         <i class="fa-solid fa-compass text-green-400 text-2xl"></i>
-        <h1 class="text-2xl font-black text-white tracking-tight">
+        <h1 class="text-xl font-black text-gray-800 tracking-tight">
           HiddenTrails.AI
         </h1>
       </div>
-      <div class="flex items-center space-x-8 font-medium text-gray-200">
+      <div class="flex items-center space-x-8 font-medium text-gray-600">
         <a href="index.html" class="hover:text-green-400 transition">Home</a>
         <a href="dashboard.html" class="hover:text-green-400 transition"
           >Dashboard</a
@@ -229,31 +221,31 @@
       <!-- SIDEBAR -->
       <aside class="w-72 glass-sidebar p-8 space-y-3">
         <p
-          class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6"
+          class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6"
         >
           Main Menu
         </p>
         <a
           href="dashboard.html"
-          class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition"
+          class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition"
         >
           <i class="fa-solid fa-house"></i> Dashboard
         </a>
         <a
           href="plantrips.html"
-          class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition"
+          class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition"
         >
           <i class="fa-solid fa-map-location-dot"></i> Plan Trip
         </a>
         <a
           href="saved.html"
-          class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition"
+          class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition"
         >
           <i class="fa-solid fa-bookmark"></i> Saved Trips
         </a>
         <a
           href="rewards.html"
-          class="flex items-center gap-3 p-4 text-gray-300 hover:bg-white/10 rounded-2xl transition"
+          class="flex items-center gap-3 p-4 text-gray-600 hover:bg-gray-100 rounded-2xl transition"
         >
           <i class="fa-solid fa-gift"></i> Rewards
         </a>
@@ -271,7 +263,7 @@
           <!-- HEADER -->
           <header class="mb-10">
             <h2
-              class="text-4xl font-black tracking-tight flex items-center gap-3"
+              class="text-3xl font-black tracking-tight flex items-center gap-3 text-gray-800"
             >
               <span class="bg-amber-500/20 p-3 rounded-2xl"
                 ><i class="fa-solid fa-camera-retro text-amber-400 text-3xl"></i
@@ -416,11 +408,21 @@
           </div>
         </div>
 
+        <!-- Hidden file input for gallery -->
+        <input type="file" id="galleryInput" accept="image/*" class="hidden" onchange="handleGalleryUpload(event)" />
+
         <!-- Action buttons -->
         <div
-          class="flex items-center justify-center gap-4 mt-8"
+          class="flex items-center justify-center gap-6 mt-8"
           id="cameraActions"
         >
+          <button
+            onclick="document.getElementById('galleryInput').click()"
+            class="relative w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white text-xl transition-all transform hover:scale-110 border border-white/20"
+            title="Upload from Gallery"
+          >
+            <i class="fa-solid fa-images"></i>
+          </button>
           <button
             onclick="capturePhoto()"
             id="captureBtn"
@@ -429,6 +431,7 @@
             <i class="fa-solid fa-camera"></i>
           </button>
         </div>
+        <p class="text-center text-gray-500 text-[11px] mt-2">📷 Capture live · 🖼️ or upload from gallery</p>
 
         <div class="hidden flex-col items-center gap-4 mt-8" id="submitActions">
           <div class="flex gap-4">
@@ -492,6 +495,7 @@
       });
 
       // ========== DEFAULT CHALLENGES (shown if no itinerary-based ones exist) ==========
+      // All image URLs verified via browser to show the correct landmark
       const defaultChallenges = [
         {
           id: "tajmahal",
@@ -499,8 +503,7 @@
           location: "Agra, UP",
           points: 150,
           difficulty: "Easy",
-          image:
-            "https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
           description: "Capture the iconic white marble mausoleum",
         },
         {
@@ -509,8 +512,7 @@
           location: "New Delhi",
           points: 100,
           difficulty: "Easy",
-          image:
-            "https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
           description: "Snap the war memorial arch from the front",
         },
         {
@@ -519,8 +521,7 @@
           location: "Mumbai, MH",
           points: 120,
           difficulty: "Medium",
-          image:
-            "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
           description: "Photograph the grand harbor-front arch",
         },
         {
@@ -529,8 +530,7 @@
           location: "Jaipur, RJ",
           points: 130,
           difficulty: "Medium",
-          image:
-            "https://images.unsplash.com/photo-1599661046289-e31897846e41?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1650530777057-3a7dbc24bf6c?q=80&w=800&auto=format&fit=crop",
           description: "Capture the Palace of Winds facade",
         },
         {
@@ -539,8 +539,7 @@
           location: "Mysore, KA",
           points: 140,
           difficulty: "Hard",
-          image:
-            "https://images.unsplash.com/photo-1600112356685-8c3e6f6e0e15?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1657856855186-7cf4909a4f78?q=80&w=800&auto=format&fit=crop",
           description: "Photograph the illuminated royal palace",
         },
         {
@@ -549,16 +548,17 @@
           location: "Amritsar, PB",
           points: 150,
           difficulty: "Hard",
-          image:
-            "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
           description: "Capture the sacred golden shrine reflection",
         },
       ];
 
+      const FALLBACK_IMG = "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=400&fit=crop";
+
       // Active challenges — will be replaced by dynamic ones if available
       let challenges = [...defaultChallenges];
 
-      // ========== DYNAMIC CHALLENGE LOADER ==========
+      // ========== DYNAMIC CHALLENGE LOADER (FAST — parallel fetch) ==========
       async function loadDynamicChallenges(userId) {
         try {
           const res = await fetch(`http://localhost:5000/photo-challenges/${userId}`);
@@ -566,42 +566,52 @@
           const data = await res.json();
 
           if (data.challenges && data.challenges.length > 0) {
-            // Convert backend challenges to frontend format
-            const dynamicChallenges = [];
-            for (const ch of data.challenges) {
-              // Fetch image from Wikipedia API for each landmark
-              let imageUrl = ch.image;
-              if (!imageUrl) {
-                try {
-                  const imgRes = await fetch(`http://localhost:5000/get-destination-image?query=${encodeURIComponent(ch.name + ' ' + ch.destination)}`);
-                  if (imgRes.ok) {
-                    const imgData = await imgRes.json();
-                    imageUrl = imgData.image;
-                  }
-                } catch (e) {
-                  imageUrl = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80";
+            // Step 1: Build challenge objects immediately (with placeholder image)
+            const dynamicChallenges = data.challenges.map(ch => ({
+              id: ch.id,
+              name: ch.name,
+              location: ch.destination || "India",
+              points: ch.points || 100,
+              difficulty: ch.difficulty || "Medium",
+              image: ch.image || FALLBACK_IMG,      // placeholder for now
+              description: ch.description || `Photograph ${ch.name}`,
+              _needsImage: !ch.image,                // flag: needs real image
+              _query: ch.name + ' ' + (ch.destination || ''),
+            }));
+
+            // Step 2: Render cards INSTANTLY (with placeholder images)
+            challenges = [...dynamicChallenges, ...defaultChallenges];
+            renderChallenges();
+            console.log(`📸 Loaded ${dynamicChallenges.length} dynamic challenges — fetching images in parallel...`);
+
+            // Step 3: Fetch ALL images in PARALLEL (not one-by-one)
+            const needImages = dynamicChallenges.filter(ch => ch._needsImage);
+            if (needImages.length > 0) {
+              const imagePromises = needImages.map(ch =>
+                fetch(`http://localhost:5000/get-destination-image?query=${encodeURIComponent(ch._query)}`)
+                  .then(r => r.ok ? r.json() : { image: null })
+                  .then(d => ({ id: ch.id, image: d.image }))
+                  .catch(() => ({ id: ch.id, image: null }))
+              );
+
+              const results = await Promise.all(imagePromises);
+
+              // Step 4: Update challenge images and re-render
+              for (const r of results) {
+                if (r.image) {
+                  const ch = challenges.find(c => c.id === r.id);
+                  if (ch) ch.image = r.image;
                 }
               }
-
-              dynamicChallenges.push({
-                id: ch.id,
-                name: ch.name,
-                location: ch.destination || "India",
-                points: ch.points || 100,
-                difficulty: ch.difficulty || "Medium",
-                image: imageUrl || "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
-                description: ch.description || `Photograph ${ch.name}`,
-              });
+              renderChallenges();
+              console.log(`🖼️ All ${results.length} images loaded in parallel!`);
             }
-
-            // Use dynamic challenges (from itineraries) + default challenges
-            challenges = [...dynamicChallenges, ...defaultChallenges];
-            console.log(`📸 Loaded ${dynamicChallenges.length} dynamic challenges from your itineraries`);
+            return; // already rendered
           }
         } catch (err) {
           console.warn("⚠️ Could not load dynamic challenges, using defaults:", err.message);
         }
-        // Re-render the challenge grid with updated challenges
+        // Render with defaults if no dynamic challenges
         renderChallenges();
       }
 
@@ -781,6 +791,31 @@
         document.getElementById("liveIndicator").classList.remove("hidden");
         document.getElementById("submitActions").style.display = "none";
         document.getElementById("cameraActions").style.display = "flex";
+        // Reset file input so same file can be re-selected
+        document.getElementById("galleryInput").value = "";
+      };
+
+      // ========== GALLERY UPLOAD ==========
+      window.handleGalleryUpload = function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          capturedBase64 = e.target.result;
+
+          // Show the uploaded image in the preview
+          document.getElementById("capturedImg").src = capturedBase64;
+          document.getElementById("capturedImg").classList.remove("hidden");
+          document.getElementById("webcamVideo").classList.add("hidden");
+          document.getElementById("liveIndicator").classList.add("hidden");
+
+          // Switch to submit actions
+          document.getElementById("cameraActions").style.display = "none";
+          document.getElementById("submitActions").classList.remove("hidden");
+          document.getElementById("submitActions").style.display = "flex";
+        };
+        reader.readAsDataURL(file);
       };
 
       // ========== SUBMIT & VERIFY ==========
